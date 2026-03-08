@@ -1,96 +1,110 @@
-# Introduction to Deep Learning course resources
-https://www.coursera.org/learn/intro-to-deep-learning
+# Introduction to Deep Learning
 
-## Running on Google Colab (tested for all weeks)
-Google has released its own flavour of Jupyter called Colab, which has free GPUs!
+> Course materials and Jupyter notebooks for the Coursera Introduction to Deep Learning course, with setup instructions for Google Colab, Docker, and Anaconda.
 
-Here's how you can use it:
-1. Open https://colab.research.google.com, click **Sign in** in the upper right corner, use your Google credentials to sign in.
-2. Click **GITHUB** tab, paste https://github.com/hse-aml/intro-to-dl and press Enter
-3. Choose the notebook you want to open, e.g. week2/v2/mnist_with_keras.ipynb
-4. Click **File -> Save a copy in Drive...** to save your progress in Google Drive
-5. Click **Runtime -> Change runtime type** and select **GPU** in Hardware accelerator box
-6. **Execute** the following code in the first cell that downloads dependencies (change for your week number):
+---
+
+## Overview
+
+This repository contains complete course materials for [Coursera's Introduction to Deep Learning](https://www.coursera.org/learn/intro-to-deep-learning), including Jupyter notebooks covering neural networks, convolutional networks, recurrent networks, and practical deep learning applications.
+
+---
+
+## Quick Start
+
+**Recommended:** Use [Google Colab](https://colab.research.google.com) with free GPU access:
+
+1. Go to https://colab.research.google.com and sign in
+2. Click **GITHUB** tab, paste `https://github.com/hse-aml/intro-to-dl` and press Enter
+3. Choose a notebook (e.g., `week2/v2/mnist_with_keras.ipynb`)
+4. Click **File → Save a copy in Drive...** to save progress
+5. Click **Runtime → Change runtime type** and select **GPU**
+6. In the first cell, run:
 ```python
 ! shred -u setup_google_colab.py
 ! wget https://raw.githubusercontent.com/hse-aml/intro-to-dl/master/setup_google_colab.py -O setup_google_colab.py
 import setup_google_colab
-# please, uncomment the week you're working on
+# Uncomment the week you're working on:
 # setup_google_colab.setup_week1()
 # setup_google_colab.setup_week2()
-# setup_google_colab.setup_week3()
-# setup_google_colab.setup_week4()
-# setup_google_colab.setup_week5()
-# setup_google_colab.setup_week6()
-
-# If you're using the old version of the course (check a path of notebook on Coursera, you'll see v1 or v2),
-# use setup_week2_old().
+# etc.
 ```
-7. If you run many notebooks on Colab, they can continue to eat up memory,
-you can kill them with `! pkill -9 python3` and check with `! nvidia-smi` that GPU memory is freed.
 
-**Known issues:**
-* No support for `ipywidgets`, so we cannot use fancy `tqdm` progress bars.
-For now, we use a simplified version of a progress bar suitable for Colab.
-* Blinking animation with `IPython.display.clear_output()`.
-It's usable, but still looking for a workaround.
+**Colab Known Issues:**
+- No `ipywidgets` support (simplified progress bars used instead)
+- Some animation flicker with `IPython.display.clear_output()`
 
-## Offline instructions
-Coursera Jupyter Environment can be slow if many learners use it heavily. 
-Our tasks are compute-heavy and we recommend to run them on your hardware for optimal performance.
+---
 
-You will need a computer with at least 4GB of RAM.
+## Local Setup
 
-There're two options to setup the Jupyter Notebooks locally: Docker container and Anaconda.
+Coursera Jupyter can be slow. For better performance, run locally with Docker or Anaconda (requires 4GB+ RAM).
 
-### Docker container option (best for Mac/Linux)
+### Docker (Mac/Linux) - Recommended
 
-Follow the instructions on https://hub.docker.com/r/zimovnov/coursera-aml-docker/ to install Docker container with all necessary software installed.
+Follow instructions at: https://hub.docker.com/r/zimovnov/coursera-aml-docker/
 
-After that you should see a Jupyter page in your browser.
+GPU support (Linux only): https://github.com/ZEMUSHKA/coursera-aml-docker#using-gpu-in-your-container-linux-hosts-only
 
-### Anaconda option (best for Windows)
-We highly recommend to install docker environment, but if it's not an option, 
-you can try to install the necessary python modules with Anaconda.
+### Anaconda (Windows/Mac/Linux)
 
-First, install Anaconda with **Python 3.5+** from [here](https://www.anaconda.com/download).
-
-Download `conda_requirements.txt` from [here](https://github.com/ZEMUSHKA/coursera-aml-docker/blob/master/conda_requirements.txt).
-
-Open terminal on Mac/Linux or "Anaconda Prompt" in Start Menu on Windows and run:
-```
+1. Install [Anaconda with Python 3.5+](https://www.anaconda.com/download)
+2. Download [`conda_requirements.txt`](https://github.com/ZEMUSHKA/coursera-aml-docker/blob/master/conda_requirements.txt)
+3. Run in terminal:
+```bash
 conda config --append channels conda-forge
 conda config --append channels menpo
 conda install --yes --file conda_requirements.txt
+jupyter notebook
 ```
 
-To start Jupyter Notebooks run `jupyter notebook` on Mac/Linux or "Jupyter Notebook" in Start Menu on Windows.
+### Download Course Materials
 
-After that you should see a Jupyter page in your browser.
+In Jupyter, click **New → Terminal** and run:
+```bash
+git clone https://github.com/hse-aml/intro-to-dl.git
+```
 
-### Prepare resources inside Jupyter Notebooks (for local setups only)
+Then open `intro-to-dl` folder, run `download_resources.ipynb` for your week, and start coding.
 
-Click **New -> Terminal** and execute: `git clone https://github.com/hse-aml/intro-to-dl.git`
-On Windows you might want to install [Git](https://git-scm.com/download/win). 
-You can also download all the resources as zip archive from GitHub page.
+### GPU Support (Advanced - Anaconda)
 
-Close the terminal and refresh Jupyter page, you will see **intro-to-dl** folder, go there, 
-all the necessary notebooks are waiting for you.
+Requires NVIDIA driver, CUDA toolkit, and cuDNN. See [TensorFlow GPU setup](https://www.tensorflow.org/versions/r1.2/install/install_linux#nvidia_requirements_to_run_tensorflow_with_gpu_support).
 
-First you need to download necessary resources, to do that open `download_resources.ipynb` 
-and run cells for Keras and your week.
+---
 
-Now you can open a notebook for the corresponding week and work there just like in Coursera Jupyter Environment.
+## Course Structure
 
-### Using GPU for offline setup (for advanced users)
-- If you have a **Linux host** you can try these instructions for Docker: 
-https://github.com/ZEMUSHKA/coursera-aml-docker#using-gpu-in-your-container-linux-hosts-only
-- The easiest way is to go with Anaconda setup, 
-that doesn't need virtualization and 
-thus works with a GPU on all platforms (including Windows and Mac). 
-You will still have to install NVIDIA GPU driver, CUDA toolkit and CuDNN 
-(requires registration with NVIDIA) 
-on your host machine in order for TensorFlow to work with your GPU: 
-https://www.tensorflow.org/versions/r1.2/install/install_linux#nvidia_requirements_to_run_tensorflow_with_gpu_support
-It can be hard to follow, so you might choose to stick to a CPU version, 
-which is also fine for the purpose of this course.
+The course is organized by weeks, each with lectures, assignments, and practice notebooks:
+
+- **Week 1** — Intro to deep learning, TensorFlow basics, neural network fundamentals
+- **Week 2** — Convolutional neural networks (CNNs), image classification with MNIST/CIFAR
+- **Week 3** — Recurrent neural networks (RNNs), sequence modeling, text generation
+- **Week 4** — Advanced topics, optimization, regularization, practical techniques
+- **Weeks 5+** — Specialized topics, applications, and final projects
+
+---
+
+## Key Topics Covered
+
+- Neural network architecture and training
+- Backpropagation and optimization algorithms
+- Convolutional networks for computer vision
+- Recurrent networks for sequences
+- Transfer learning and fine-tuning
+- Practical deep learning techniques
+
+---
+
+## Requirements
+
+- Python 3.5+ (3.7+ recommended)
+- Jupyter Notebook or Google Colab
+- TensorFlow 2.0+
+- NumPy, Matplotlib, and other common ML libraries
+
+---
+
+## Course
+
+[Coursera - Introduction to Deep Learning](https://www.coursera.org/learn/intro-to-deep-learning)
